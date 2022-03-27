@@ -1,0 +1,121 @@
+/* .main_div {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(127, 245, 80);
+    position: fixed;
+}
+.menu_txt {
+    margin-left: 100px;
+    text-decoration: none;
+    margin-top: -50px;
+}
+
+.homediv {
+    margin-top: 20px;
+}
+.redirecttologin{
+    font-size: 15px;
+} */
+/* .login-div{
+    width: 90%;
+    background-color: white;
+    margin-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 3%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 2px 0px #bbb6bf;
+}
+.login-div:hover{
+    box-shadow: 0px 4px 5px 0px #bbb6bf;
+
+} */
+/* .todotile {
+    position: fixed;
+    margin-top: 15px;
+    width: 13%;
+    height: 30%;
+    margin-left: 100px;
+    position: absolute;
+    background-color: blueviolet;
+}
+.todotile .badge{
+    position: absolute;
+    right: 23px;
+    top: 23px;
+    cursor:pointer;
+} */
+/* .addtask{
+    width: 200px;
+} */
+/* .my-lg-0 {
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+    float: right;
+    margin-left: 980px;
+} */
+
+/* .nav-div{
+    width: 100%;
+    padding-bottom: 1%;
+    border-radius: 3%;
+    padding: 10px;
+    display: flex;
+    box-shadow: 0px 7px 14px -10px #bbb7b7;
+    
+} */
+/* .navbar{
+    margin-left: 5px;
+    padding-left: 10px;
+    width: 100%;
+    box-shadow: 0px 7px 14px -10px #bbb7b7;
+
+} */
+/* .username {
+    float: right;
+    margin-top: -48px;
+    margin-right: 100px;
+} */
+
+.tiles {
+    height: 150px;
+    width: 150px;
+    margin-top: 10%;
+    margin-left: 10%;
+    border-radius: 25px;
+}
+
+.btn{
+    margin-left: 50px;
+}
+
+/* .drop-down {
+    width: 260px;
+} */
+
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+    animation: App-formdiv#282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+}

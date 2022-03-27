@@ -1,0 +1,37 @@
+.signup-div{
+    width: 55%;
+    background-color: white;
+    margin-top: 1%;
+    padding-bottom: 1%;
+    /* border-radius: 3%; */
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 2px 0px #bbb6bf;
+}
+.signup-div:hover{
+    box-shadow: 0px 4px 5px 0px #bbb6bf;
+
+}
+
+@media only screen and (max-width: 600px) {
+    .signup-div{
+        width: 95%;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media only screen and (min-width: 700px) {
+    .signup-div{
+        width: 95%;
+    }
+} */
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 800px) {
+    /* .signup-div{
+        width: 95%;
+    } */
+    /* .form-control{
+        width: 100% !important;
+    } */
+}

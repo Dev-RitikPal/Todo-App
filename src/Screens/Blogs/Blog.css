@@ -1,0 +1,266 @@
+.showblogmaindiv {
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 80%;
+  max-height: 100%;
+  margin-bottom: 50px;
+  box-shadow: 0 3px 4px 0px #bbb7b7;
+}
+.date-content {
+  float: right;
+  margin-right: 20px;
+  font-size: 13px;
+  margin-top: 3%;
+}
+.title-content {
+  float: left;
+  margin-left: 20px;
+  font-size: 20px;
+  margin-top: 3%;
+  word-break: break-all;
+}
+.blog-title {
+  font-size: 20px;
+  color: cornflowerblue;
+}
+.blog-title:hover {
+  color: blueviolet;
+}
+.blog-div {
+  margin-top: 13%;
+  width: 96%;
+  margin-left: 2%;
+  white-space: pre-wrap;
+}
+.blogtitle {
+  color: black;
+  height: 40px;
+  float: left;
+  margin-left: 10px;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.blogdesc {
+  color: cornflowerblue;
+  float: left;
+  margin-left: 2%;
+  width: 750px;
+  text-overflow: ellipsis;
+}
+.blogdesc:hover {
+  color: blueviolet;
+}
+.editblog {
+  float: right;
+  margin-right: 30px;
+  margin-top: 10px;
+  cursor: pointer;
+  color: blueviolet;
+}
+.editblog:hover {
+  color: blue;
+}
+.blog-div {
+  margin-bottom: 20px;
+  font-size: 17px;
+}
+.title-img:hover {
+  opacity: 25%;
+  box-shadow: 0px 0px 10px 0px #bbb7b7;
+}
+.blogdatatitle {
+  float: left;
+  margin: 20px;
+  color: black;
+  float: left;
+  margin-left: 10px;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.imagepreview {
+  height: 200px;
+  width: 200px;
+}
+.imagepreview img {
+  width: 30%;
+  border-radius: 15px;
+  height: 115%;
+  float: left;
+  margin-left: 13%;
+}
+.card {
+  width: 75%;
+  height: 150px;
+}
+.card:hover {
+  box-shadow: 0px 2px 2px 0px #bbb6bf;
+}
+.cover-image {
+  float: right;
+  margin-right: -16px;
+  margin-top: -17px;
+  border-radius: 0.25rem;
+}
+.upload-btn {
+  width: auto;
+  margin-left: 48%;
+}
+.editor {
+  width: 90%;
+}
+.blog-main-div {
+  background-image: linear-gradient(
+    140deg,
+    #eadedb 0%,
+    #bc70a4 50%,
+    #bfd641 75%
+  );
+  width: 100%;
+}
+.card-div {
+  width: 60%;
+  padding-bottom: 2%;
+  margin-left: 20%;
+}
+/* .card-div:hover {
+  box-shadow: 0px 4px 5px 0px #bbb6bf;
+} */
+.blogcard:hover {
+  box-shadow: 0px 2px 3px 1px #48747e;
+}
+@media only screen and (max-width: 700px) {
+  .card {
+    width: 95%;
+  }
+  .editor {
+    width: 98%;
+  }
+  .row {
+    display: contents;
+  }
+  .imagepreview img {
+    width: 30%;
+    border-radius: 15px;
+    float: left;
+    margin-left: 1%;
+  }
+  .upload-btn {
+    width: auto;
+    margin-left: 48%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .card {
+    width: 95%;
+  }
+  .editor {
+    width: 98%;
+  }
+  .row {
+    display: contents;
+  }
+  .imagepreview img {
+    width: 30%;
+    border-radius: 15px;
+    float: left;
+    margin-left: 1%;
+  }
+  .upload-btn {
+    width: auto;
+    margin-left: 48%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .card {
+    width: 95%;
+  }
+  .editor {
+    width: 98%;
+  }
+  .row {
+    display: contents;
+  }
+  .imagepreview img {
+    width: 98%;
+    border-radius: 15px;
+    float: left;
+    margin-left: 1%;
+  }
+  .upload-btn {
+    width: auto;
+    margin-left: 48%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    width: 95%;
+  }
+  .editor {
+    width: 98%;
+  }
+  .row {
+    display: contents;
+  }
+  .imagepreview img {
+    width: 30%;
+    border-radius: 15px;
+    float: left;
+    margin-left: 1%;
+  }
+  .upload-btn {
+    width: auto;
+    margin-left: 48%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .card {
+    width: 95%;
+  }
+  .editor {
+    width: 98%;
+  }
+  .row {
+    display: contents;
+  }
+  .imagepreview img {
+    width: 30%;
+    height: 115%;
+    border-radius: 15px;
+    float: left;
+    margin-left: 1%;
+  }
+  .upload-btn {
+    width: auto;
+    margin-left: 48%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .card {
+    width: 95%;
+  }
+  .editor {
+    width: 98%;
+    /* margin-top: 10%; */
+  }
+  .row {
+    display: contents;
+  }
+  .imagepreview img {
+    width: 73%;
+    height: 115%;
+    border-radius: 15px;
+    float: left;
+    margin-left: 13%;
+  }
+  .upload-btn {
+    width: auto;
+    margin-left: 48%;
+  }
+}

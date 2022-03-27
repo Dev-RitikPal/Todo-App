@@ -1,0 +1,19 @@
+.typing-main-div {
+  background-image: url("../../Assets/Images/typing_test_bg.jpg");
+  background-position-y: center;
+  width: 100%;
+  padding-bottom: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+  position: fixed;
+  justify-content: center;
+}
+.sec-tw {
+  display: flex;
+  justify-content: center;
+  margin-top: -1%;
+  margin-left: -5.5%;
+}

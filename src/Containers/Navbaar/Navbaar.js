@@ -63,9 +63,6 @@ export const Navbaar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
-                        {/* <li className="nav-item ">
-                            <span className="nav-link"><Link className="menu-tabs" to="/dashboard">Dashboard</Link></span>
-                        </li> */}
                         <li className="nav-item">
                             <span className="nav-link" title='Portfolio@Ritik' ><Link className="menu-tabs mx-3" to={`/portfolio/${"Ritik-Pal"}`}>Portfolio</Link></span>
                         </li>

@@ -59,7 +59,7 @@ export const RenderAllTask = ({ search, GetingUserTododata }) => {
 
   return (
     <>
-      <AppBar position="static" className="appbar">
+      <AppBar position="static" style={{width:"60%"}} className="appbar">
         <Tabs
           value={value}
           onChange={handleChange}

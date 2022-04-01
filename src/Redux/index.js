@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { TodoReducer, UserDataReducer, BlogdetailsReducer, BlogidReducer, SearchkeyworddReducer } from './Reducer/Reducers';
+import { TodoReducer, UserDataReducer, BlogdetailsReducer, BlogidReducer,AddTofavoriteBlogidReducer } from './Reducer/Reducers';
 
 export * from './Action'
 export * from './Reducer'
@@ -9,4 +9,5 @@ export default combineReducers({
     userData: UserDataReducer,
     blogs: BlogdetailsReducer,
     blogid : BlogidReducer,
+    AddTofavorite: AddTofavoriteBlogidReducer
   });

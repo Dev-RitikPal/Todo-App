@@ -24,7 +24,7 @@ export const UserLogout = async () =>{
     }
 }
 
-export const AddingUserdata = async (username,email,phone,address,country,state,city,zipcode,profile) => {
+export const AddingUserdata = async (username,email,phone,address,country,state,city,zipcode,profile,blogId) => {
     return await setDoc(doc(dbref, email), {
         username: username.charAt(0)?.toUpperCase() + username.slice(1),
         email: email,
@@ -34,7 +34,8 @@ export const AddingUserdata = async (username,email,phone,address,country,state,
         state: state,
         city: city,
         zipcode: zipcode,
-        profileimage : profile
+        profileimage : profile,
+        Favoriteblogs : blogId || []
     });
 }
 
@@ -57,6 +58,18 @@ export const HandleUpdateUserData = async (username, email, phone, address, zipc
         return error.message
     }
 }
+
+export const HandleAddingFavrioteBlog = async (Favoriteblogs) => {
+    try {
+        const updatedata = doc(dbref, auth?.currentUser?.email);
+        return await updateDoc(updatedata, { 
+            favrouteblogs: Favoriteblogs,
+        })
+    } catch (error) {
+        return error.message
+    }
+}
+
 
 export const addTodos = async (addtask, category, description ) => {
     const today = new Date() 

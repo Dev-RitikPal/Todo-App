@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -9,20 +10,19 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { lightBlue, red } from "@mui/material/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShareIcon from "@mui/icons-material/Share";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import moment from "moment";
-import "./Blog.css";
-import { auth, GetBlogsData, HandleDeletingBlog } from "../../Firebase";
-import { useDispatch } from "react-redux";
+import { auth, GetBlogsData, HandleAddingFavrioteBlog, HandleDeletingBlog } from "../../Firebase";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { getBlogs } from "../../Redux/Action/Actions";
 import { toast } from "react-toastify";
 import { handleErrors } from "../../Utils";
+
+import "./Blog.css";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,10 +36,13 @@ const ExpandMore = styled((props) => {
 }));
 
 export const BlogCard = (props) => {
-  console.log(props.item);
+  // console.log(props.item);
   const [expanded, setExpanded] = React.useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const Favblog = useSelector((state) => state?.userData?.data?.favrouteblogs);
+  const [showcolor, setshowcolor] = React.useState();
+
   const colors = [
     "red",
     "blue",
@@ -59,6 +62,7 @@ export const BlogCard = (props) => {
   };
   React.useEffect(() => {
     BlogDetails();
+    setshowcolor(Favblog?.includes(props?.item?.blogid))
   }, []);
 
   const BlogDetails = async () => {
@@ -71,11 +75,12 @@ export const BlogCard = (props) => {
       toast.error(handleErrors(error.message));
     }
   };
-
+  
   const HandleDeleteBlog = async (blogid) => {
     try {
       await HandleDeletingBlog(blogid);
       BlogDetails();
+      setshowcolor(true)
       toast.success("Bog deleted");
       // setloader(false);
     } catch (error) {
@@ -83,13 +88,25 @@ export const BlogCard = (props) => {
     }
     // setloader(false);
   };
-  
-  const AddTofavorite = (blodId) =>{
-    alert(blodId)
+
+  const AddTofavorite = async (blogId) => {
+    console.log(Favblog?.includes(blogId))
+    const isexits = Favblog?.includes(blogId)
+    try {
+      if (!isexits) {
+        await HandleAddingFavrioteBlog([...Favblog,blogId]);
+        BlogDetails();
+        toast.success("Bog deleted");
+        // setloader(false);
+      } else {
+        toast.info("Already added to favriote");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   return (
-
     <div className="card-div">
       <Card style={{ width: "", marginTop: "2%", backgroundColor:'rgb(0 30 60)', color:"white", borderRadius:"9px" }} className="blogcard dark">
         <CardHeader
@@ -116,7 +133,6 @@ export const BlogCard = (props) => {
             props?.item?.Name.slice(1)
           }
           subheader={<span style={{color:"white"}}>{moment(props?.item?.date).format("ll") + " " + props?.item?.time}</span>}
-         
         />
         <CardMedia
           component="img"
@@ -132,7 +148,7 @@ export const BlogCard = (props) => {
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites" onClick={()=>AddTofavorite(props?.item?.blogid)}>
-            <FavoriteIcon style={{color:"white"}} />
+            <FavoriteIcon style={{color: showcolor ? "red" : "white"}} />
           </IconButton>
           <IconButton aria-label="share">
             <ShareIcon style={{color:"white"}} />
@@ -149,7 +165,7 @@ export const BlogCard = (props) => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
            <center> <Typography paragraph>About this blog</Typography></center>
-        <hr/>
+          <hr/>
            <br/><br/>
             <Typography paragraph>
               <span

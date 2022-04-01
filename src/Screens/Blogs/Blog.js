@@ -20,13 +20,16 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { BlogCard } from "./BlogsCard";
+import { IconButton } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 export const Blog = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const blogdata = useSelector((state) => state?.blogs);
 
-  const [loader, setloader] = useState(false);
+  const [showFavorite, setShowFavorite] = useState(false);
+  const Favblog = useSelector((state) => state?.userData?.data?.favrouteblogs);
 
   useEffect(() => {
     blogdetails();
@@ -49,38 +52,40 @@ export const Blog = () => {
   };
 
   const handledeletingblog = async (blogid) => {
-    setloader(true);
+    // setloader(true);
     try {
       await HandleDeletingBlog(blogid);
       blogdetails();
       toast.success("Bog deleted");
-      setloader(false);
+      // setloader(false);
     } catch (error) {
       console.log(error.message);
     }
-    setloader(false);
+    // setloader(false);
   };
 
   return (
     <div>
       <Navbaar />
-      {/* <br /> */}
-
       <div className="blog-main-div ">
-        <button type="button" className="btn add-btn mt-3 btn-primary">
+        <button type="button" 
+        className="btn add-btn mt-3 btn-primary" 
+        onClick={RedirectToCreatePage}
+        >
           <i className="fas fa-plus"></i>&nbsp;
-          <span
-            onClick={RedirectToCreatePage}
-            style={{ textDecoration: "none", color: "white" }}
-          >
             Create Blog
-          </span>
+        </button>
+        <button type="button" onClick={()=>setShowFavorite(showFavorite ? false : true)} style={{float:"left"}} className="btn add-btn ml-1 mt-3 btn-primary">
+         {!showFavorite && <FavoriteIcon style={{color:"white"}} />}
+         &nbsp;{showFavorite ? "Show all" : `Show favorite (${Favblog?.length})`} 
         </button>
         <br />
         <br />
-
+        <br />
+        {console.log(blogdata)}
+        <hr style={{border: "0.5px solid", color:"aliceblue"}}/>
         {blogdata[0]
-          ? blogdata.map((item, index) => <BlogCard item={item} />)
+          ? blogdata.map((item, index) => showFavorite ? Favblog.includes(item?.blogid) && <BlogCard item={item} /> : <BlogCard item={item} />)
           : null}
       </div>
 

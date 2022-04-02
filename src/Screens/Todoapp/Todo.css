@@ -149,7 +149,7 @@
     border-style: solid;
     border-width: 0px;
 }
-.modaltaskdescedit{
+.modaltaskdescedit{ 
     background-color: white;
     outline: thin;
     width: 415px;
@@ -163,6 +163,7 @@
     color: black;
     border-width: 0px;
 }
+
 .search-label{
     float: right;
 }

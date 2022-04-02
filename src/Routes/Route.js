@@ -7,6 +7,7 @@ import { Dashboard, Login, Signup, TodoTasks, Portfolio, Blog, CreateBlog, Showb
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoutes';
 import { loading } from '../Assets';
+import { SpinngLoader } from '../Containers';
 
 export const Routes = (props) => {
 
@@ -44,7 +45,7 @@ export const Routes = (props) => {
   return (
     <Router>
       <Switch>
-      {loader ? <center><img className="loadinggif" src={loading} alt="Loading"/></center> :
+      {loader ?  <SpinngLoader/>:
         <div> 
           {privateroutes.map((value,index)=> 
             <PrivateRoute exact key={index} 

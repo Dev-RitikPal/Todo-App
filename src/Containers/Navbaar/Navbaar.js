@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { GetUserdata, getUserdata, UserLogout, userLogout } from '../../Firebase';
 import { handleErrors } from '../../Utils';
 import { GetUserData } from '../../Redux/Action/Actions';
+import { SpinngLoader } from '../Loader';
 
 export const Navbaar = () => {
     
@@ -46,11 +47,9 @@ export const Navbaar = () => {
         }
     }
     return (
+
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark w-100">
-                {/* <span className="navbar-brand text-white  "> */}
-                     
-                {/* </span> */}
+            <nav className="navbar navbar-expand-lg navbar-dark w-100" style={{ backgroundColor:'rgb(0 30 60)'}}>
                 <button 
                     className="navbar-toggler mx-2" 
                     type="button" data-toggle="collapse" 

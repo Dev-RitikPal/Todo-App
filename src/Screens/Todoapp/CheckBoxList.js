@@ -103,7 +103,7 @@ export const CheckboxList = ({ todo, id, getingdata }) => {
         <>
           <CloseIcon
             onClick={() => setOpenTask(false)}
-            style={{ float: "right" }}
+            style={{ float:"right"}}
           /><br/><br/>
           <Validation todo={todo} getTodoData={getingdata} />
         </>

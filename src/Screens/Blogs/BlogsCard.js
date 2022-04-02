@@ -41,13 +41,13 @@ export const BlogCard = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const Favblog = useSelector((state) => state?.userData?.data?.favrouteblogs);
-  const [showcolor, setshowcolor] = React.useState();
+  const [showcolor, setshowcolor] = React.useState(Favblog?.includes(props?.item?.blogid));
+  const [favrouteblogs, setfavrouteblogs] = React.useState(Favblog);
 
   const colors = [
     "red",
     "blue",
     "black",
-    "lightBlue",
     "green",
     "purple",
     "violet",
@@ -75,7 +75,7 @@ export const BlogCard = (props) => {
       toast.error(handleErrors(error.message));
     }
   };
-  
+
   const HandleDeleteBlog = async (blogid) => {
     try {
       await HandleDeletingBlog(blogid);
@@ -90,16 +90,19 @@ export const BlogCard = (props) => {
   };
 
   const AddTofavorite = async (blogId) => {
-    console.log(Favblog?.includes(blogId))
-    const isexits = Favblog?.includes(blogId)
+    const isexits = favrouteblogs?.filter(item => item == blogId)
+    const removefav = Favblog.filter((item)=> item !== blogId)
+    console.log(removefav[0],"<=======")
     try {
-      if (!isexits) {
-        await HandleAddingFavrioteBlog([...Favblog,blogId]);
+      if (!removefav[0]) {
+        await HandleAddingFavrioteBlog([...Favblog, blogId]);
         BlogDetails();
-        toast.success("Bog deleted");
-        // setloader(false);
+        toast.success("Added to favorities");
+        setshowcolor(true)
       } else {
-        toast.info("Already added to favriote");
+        await HandleAddingFavrioteBlog(removefav);
+        setshowcolor(false)
+        toast.info("Removed From favriote");
       }
     } catch (error) {
       console.log(error.message);
@@ -108,7 +111,7 @@ export const BlogCard = (props) => {
 
   return (
     <div className="card-div">
-      <Card style={{ width: "", marginTop: "2%", backgroundColor:'rgb(0 30 60)', color:"white", borderRadius:"9px" }} className="blogcard dark">
+      <Card style={{ width: "", marginTop: "2%", backgroundColor: 'rgb(0 30 60)', color: "white", borderRadius: "9px" }} className="blogcard dark">
         <CardHeader
           avatar={
             <Avatar
@@ -125,14 +128,14 @@ export const BlogCard = (props) => {
               aria-label="settings"
               onClick={() => HandleDeleteBlog(props?.item?.blogid)}
             >
-              <span style={{color:"white"}}>{auth.currentUser.uid == props?.item?.uid ? <DeleteIcon /> : null}</span>
+              <span style={{ color: "white" }}>{auth.currentUser.uid == props?.item?.uid ? <DeleteIcon /> : null}</span>
             </IconButton>
           }
           title={
             props?.item?.Name.charAt(0)?.toUpperCase() +
             props?.item?.Name.slice(1)
           }
-          subheader={<span style={{color:"white"}}>{moment(props?.item?.date).format("ll") + " " + props?.item?.time}</span>}
+          subheader={<span style={{ color: "white" }}>{moment(props?.item?.date).format("ll") + " " + props?.item?.time}</span>}
         />
         <CardMedia
           component="img"
@@ -142,31 +145,31 @@ export const BlogCard = (props) => {
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary" fontSize="20px">
-            <strong style={{color:"white"}}>Title : </strong>{" "}
-            <span dangerouslySetInnerHTML={{ __html: props?.item?.Title }} style={{color:"white"}}  />
+            <strong style={{ color: "white" }}>Title : </strong>{" "}
+            <span dangerouslySetInnerHTML={{ __html: props?.item?.Title }} style={{ color: "white" }} />
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" onClick={()=>AddTofavorite(props?.item?.blogid)}>
-            <FavoriteIcon style={{color: showcolor ? "red" : "white"}} />
+          <IconButton aria-label="add to favorites" onClick={() => AddTofavorite(props?.item?.blogid)}>
+            <FavoriteIcon style={{ color: showcolor ? "red" : "white" }} />
           </IconButton>
           <IconButton aria-label="share">
-            <ShareIcon style={{color:"white"}} />
+            <ShareIcon style={{ color: "white" }} />
           </IconButton>
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
-          >
-            <ExpandMoreIcon style={{color:"white"}} />
+            >
+            <ExpandMoreIcon style={{ color: "white" }} />
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-           <center> <Typography paragraph>About this blog</Typography></center>
-          <hr/>
-           <br/><br/>
+            <center> <Typography paragraph>About this blog</Typography></center>
+            <hr />
+            <br /><br />
             <Typography paragraph>
               <span
                 dangerouslySetInnerHTML={{ __html: props?.item?.Blogdetail }}
@@ -183,7 +186,7 @@ export const BlogCard = (props) => {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <ExpandMoreIcon style={{color:"white"}} />
+            <ExpandMoreIcon style={{ color: "white" }} />
           </ExpandMore>
         </Collapse>
       </Card>

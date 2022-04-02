@@ -84,7 +84,7 @@ export const TodoTasks = () => {
       <div className="h-100 ">
         <div className="main-div h-100%">
           <br />
-          <h1>ToDo-App</h1>
+          <h1 style={{color:"white"}}>ToDo-App</h1>
           <br />
           <div className="App">
             <br />
@@ -190,6 +190,8 @@ export const TodoTasks = () => {
             </div>
           </div>
           <br />
+          <br />
+          <hr style={{border: "0.5px solid", color:"aliceblue"}}/>
           <center>
             <RenderAllTask search={search} GetingUserTododata={GetingUserTododata} />
           </center>

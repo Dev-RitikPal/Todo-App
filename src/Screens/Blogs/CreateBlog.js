@@ -27,7 +27,6 @@ import { loading } from "../../Assets";
 
 export const CreateBlog = () => {
   const history = useHistory();
-  // const logedinUserName = useSelector((state) => state?.userName);
   const logedinUserName = useSelector(
     (state) => state?.userData?.data.username
   );
@@ -57,7 +56,6 @@ export const CreateBlog = () => {
       editorState: editorValue,
     });
   };
-  console.log(imageAsUrl, "immmmmmmmmmmmmmmmmmmmmmmmmm");
 
   const HandleAddingBlogs = async (e) => {
     e.preventDefault();
@@ -201,8 +199,6 @@ export const CreateBlog = () => {
                         src={URL.createObjectURL(Image)}
                         alt="UploadedImage"
                       />
-                      {/* <button className="btn uploabtn btn-primary" onClick={uploadImage} style={{ float: "lef" }}>
-                    {uploadprogress ? uploadprogress === 100 ? "Uploaded" : String(uploadprogress).slice(0, 4) + "% Done" : "Upload"}</button> */}
                     </>
                   ) : null}
                 </div>
@@ -217,8 +213,6 @@ export const CreateBlog = () => {
                   </div>
                 ))
               )}
-              {/* {Image ? <button className="btn add-btn btn-primary" onClick={uploadImage} style={{ float: "lef" }}>
-                {uploadprogress ? uploadprogress === 100 ? "Uploaded" : String(uploadprogress).slice(0, 4) + "% Done" : "Upload"}</button> : null} */}
               <div className="mt-4">
                 <Editor
                   toolbarHidden={false}

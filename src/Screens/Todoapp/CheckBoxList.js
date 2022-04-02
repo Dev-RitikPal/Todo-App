@@ -25,7 +25,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
 import "./Todo.css";
 import { Validation } from "./Validations";
-// import { ExpandTask, ExpandTasks } from "./ExpnadTask";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -65,8 +64,6 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export const CheckboxList = ({ todo, id, getingdata }) => {
-  const [updatedname, setUpdatedname] = React.useState();
-  const [updateddesc, setUpdateddesc] = React.useState();
   const [openTask, setOpenTask] = React.useState(false);
   const tododatadetail = useSelector((state) => state);
 

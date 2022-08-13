@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,11 +9,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { GetUserdata, getUserdata, UserLogout, userLogout } from '../../Firebase';
 import { handleErrors } from '../../Utils';
 import { GetUserData } from '../../Redux/Action/Actions';
-import { SpinngLoader } from '../Loader';
 
 export const Navbaar = () => {
     
-    const history = useHistory()
+    const history = useNavigate()
     const dispatch = useDispatch();
     const user = useSelector((state)=>state?.userData?.data);
     const [displayNone, setDisplayNone] = useState('')    
@@ -47,9 +46,11 @@ export const Navbaar = () => {
         }
     }
     return (
-
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark w-100" style={{ backgroundColor:'rgb(0 30 60)'}}>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark w-100">
+                {/* <span className="navbar-brand text-white  "> */}
+                     
+                {/* </span> */}
                 <button 
                     className="navbar-toggler mx-2" 
                     type="button" data-toggle="collapse" 
@@ -62,6 +63,9 @@ export const Navbaar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
+                        {/* <li className="nav-item ">
+                            <span className="nav-link"><Link className="menu-tabs" to="/dashboard">Dashboard</Link></span>
+                        </li> */}
                         <li className="nav-item">
                             <span className="nav-link" title='Portfolio@Ritik' ><Link className="menu-tabs mx-3" to={`/portfolio/${"Ritik-Pal"}`}>Portfolio</Link></span>
                         </li>

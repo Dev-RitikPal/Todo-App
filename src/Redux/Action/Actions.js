@@ -33,10 +33,11 @@ export const getBlogid = (data) => {
     },
   };
 };
-export const AddTofavorite = (data) => {
+
+export const getUserDB = (data) => {
   return {
-    type: "Add_To_favorite_blogid",
-    favoriteblog: {
+    type: "getUserDBfromNode",
+    getUserData: {
       detail: data,
     },
   };

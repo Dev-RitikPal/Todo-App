@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import './Blog.css'
 
@@ -11,7 +11,7 @@ import { GetBlogsData } from "../../Firebase";
 export const Showblogs = () => {
   
   const dispatch = useDispatch()
-  const history = useHistory()
+  const history = useNavigate()
   const blogdata = useSelector((state) => state?.blogs);
   const blogidref = useSelector((state) => state?.blogid);
   const authorname = useSelector((state)=>state?.userData?.data.username);

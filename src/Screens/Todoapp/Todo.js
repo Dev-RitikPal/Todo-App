@@ -1,9 +1,9 @@
 import { React, useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
-
 import "./Todo.css";
 
 import { loading } from "../../Assets";
@@ -13,25 +13,34 @@ import { handleErrors } from "../../Utils";
 import { addTodos, GetUsertodoData } from "../../Firebase";
 import { GetTodo, searchkeyword } from "../../Redux";
 
-import { RenderAllTask } from "./RenderAllTask";
+import { AllTaskList } from "./Todovalidation";
+import axios from "axios";
+import {BACKEND_URL} from '../../Services'
+import {ModalOpen} from "../../Components/Modal"
+import { TodoForm } from "./TodoForm";
 
-export const TodoTasks = () => {
+export const instance = axios.create({
+  baseURL:BACKEND_URL
+})
+
+export const TodoTasks = (props) => {
+  const {show, todo} = props
+  const dispatch = useDispatch();
   const closeRef = useRef();
   const data = useSelector((state) => state?.todos);
-  const history = useHistory();
-  const dispatch = useDispatch();
-
+  const history = useNavigate();
   const [addtask, setAddtask] = useState("");
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [loader, setLoader] = useState(false);
 
-  const GetingUserTododata = async () => {
+  const getingUserdata = async () => {
     try {
-      const res = await GetUsertodoData();
+      // const res = await GetUsertodoData();
+      const res = await instance.get("/getTodos");
       if (res) {
-        dispatch(GetTodo(res));
+        dispatch(GetTodo(res.data));
       } else {
         toast.error("User doesn't exists");
       }
@@ -41,18 +50,27 @@ export const TodoTasks = () => {
   };
 
   useEffect(() => {
-    GetingUserTododata();
-  }, [data]);
-  
+    getingUserdata();
+  }, []);
+
+  // dispatch(searchkeyword(e.target.value))
   const HandleAddingTask = async (e) => {
+    // addtodo
     e.preventDefault();
     setLoader(true);
     if (addtask) {
       try {
-        const res = await addTodos(addtask, category, description);
+        const data = {
+          taskName:addtask,
+          description:description,
+          category:category,
+          status:false
+        }
+        const res = await axios.post("http://localhost:3003/addtodo", data)
+        console.log("🚀 ~ file: Todo.js ~ line 70 ~ HandleAddingTask ~ res", res)
         closeRef.current.click();
         if (res) {
-          GetingUserTododata();
+          getingUserdata();
           toast.success("Task Created ~ " + addtask);
         } else {
           toast.warning("Try again");
@@ -67,7 +85,7 @@ export const TodoTasks = () => {
     setAddtask("");
     setDescription("");
     setCategory("");
-    localStorage.setItem("pageID", 2);
+    // localStorage.setItem("pageID", 2);
   };
 
   const clearinputs = () => {
@@ -84,7 +102,7 @@ export const TodoTasks = () => {
       <div className="h-100 ">
         <div className="main-div h-100%">
           <br />
-          <h1 style={{color:"white"}}>ToDo-App</h1>
+          <h1 style={{marginLeft:"5%"}}>ToDo-App</h1>
           <br />
           <div className="App">
             <br />
@@ -117,7 +135,7 @@ export const TodoTasks = () => {
               aria-hidden="true"
             >
               <div className="modal-dialog" role="document">
-                <div className="modal-content">
+                <div className="modal-content" style={{marginTop:"40%"}}>
                   <div className="modal-header">
                     <h5 className="modal-title" id="exampleModalLongTitle">
                       <strong>Add Task</strong>
@@ -193,7 +211,7 @@ export const TodoTasks = () => {
           <br />
           <hr style={{border: "0.5px solid", color:"aliceblue"}}/>
           <center>
-            <RenderAllTask search={search} GetingUserTododata={GetingUserTododata} />
+            <AllTaskList search={search} getingUserdata={getingUserdata} />
           </center>
         </div>
       </div>

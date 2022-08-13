@@ -158,7 +158,7 @@ textarea {
     flex-direction: row;
     justify-content: space-between;
     margin: 0 auto;
-    /* padding: 20px; */
+    padding: 20px;
     position: relative;
     max-width: 920px;
   }

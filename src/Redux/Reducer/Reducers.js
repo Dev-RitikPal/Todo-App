@@ -1,9 +1,9 @@
-import { accordionActionsClasses } from "@mui/material";
-
 export const TodoReducer = (state = [], action) => {
   switch (action.type) {
     case "GetTodo":
       return action.tododata.data;
+    // case "getUserDBfromNode":
+    //   return action;
     default:
       return state;
   }
@@ -36,10 +36,10 @@ export const BlogidReducer = (state = [], action) => {
   }
 };
 
-export const AddTofavoriteBlogidReducer = (state = [], action) => {
+export const getUserDBReducers = (state = [], action) => {
   switch (action.type) {
-    case "Add_To_favorite_blogid":
-      return {state:[...state,action.favoriteblog]}
+    case "getUserDBfromNode":
+      return action.getUserData.detail
     default:
       return state;
   }

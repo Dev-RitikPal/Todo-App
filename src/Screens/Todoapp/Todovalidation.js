@@ -7,10 +7,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { CheckboxList } from "./CheckBoxList";
+import { CheckboxList } from "./data";
 import { useSelector } from "react-redux";
 import { Badge } from "@mui/material";
-
+import { useEffect } from "react";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -44,14 +44,23 @@ function a11yProps(index) {
   };
 }
 
-export const RenderAllTask = ({ search, GetingUserTododata }) => {
-  const data = useSelector((state) => state?.todos);
+export const AllTaskList = ({ search, getingUserdata }) => {
+  const data = useSelector((state) => state.todos);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const filterData = data?.filter(
+    (x) =>
+      x?.taskName?.includes(search) ||
+      x?.category?.includes(search) ||
+      x?.date?.includes(search)
+  );
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  // React.useEffect(() => {
+  //   getingUserdata()
+  // }, [data, getingUserdata])
 
   const handleChangeIndex = (index) => {
     setValue(index);
@@ -59,7 +68,7 @@ export const RenderAllTask = ({ search, GetingUserTododata }) => {
 
   return (
     <>
-      <AppBar position="static" style={{width:"60%"}} className="appbar">
+      <AppBar position="static" style={{ width: "60%" }} className="appbar">
         <Tabs
           value={value}
           onChange={handleChange}
@@ -70,14 +79,12 @@ export const RenderAllTask = ({ search, GetingUserTododata }) => {
         >
           <Tab label={`All (${data.length})`} />
           <Tab
-            label={`Active (${
-              data.filter((x) => x.status === "Active").length
-            })`}
+            label={`Active (${data?.filter((x) => x.status === false).length})`}
             {...a11yProps(1)}
           />
           <Tab
             label={`Completed (${
-              data.filter((x) => x.status === "Completed").length
+              data?.filter((x) => x.status === true).length
             })`}
             {...a11yProps(2)}
           />
@@ -92,73 +99,59 @@ export const RenderAllTask = ({ search, GetingUserTododata }) => {
           <TabPanel value={value} index={0} dir={theme.direction}>
             {/* Item One */}
             {data[0] ? (
-              data
-                .filter(
-                  (x) =>
-                    x.todo.includes(search) ||
-                    x.category.includes(search) ||
-                    x.date.includes(search)
-                )
-                .map((todo, i) => (
+              filterData && filterData.length > 0 ? (
+                filterData.map((todo, i) => (
                   <CheckboxList
                     key={i}
+                    // type="all"
                     todo={todo}
-                    id={todo.id}
-                    getingdata={GetingUserTododata}
+                    id={todo._id}
+                    getingdata={getingUserdata}
                   />
                 ))
+              ) : (
+                "No match found"
+              )
             ) : (
-              <center>
-                <h3>You did'nt created any todos</h3>
-              </center>
+              "You did'nt created any todos"
             )}
+            {/* <CheckboxList/> */}
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            {data.filter((x) => x.status === "Active")[0] ? (
-              data
-                .filter((x) =>
-                  x.status === "Active"
-                    ? x.todo.includes(search) ||
-                      x.category.includes(search) ||
-                      x.date.includes(search)
-                    : null
-                )
-                .map((todo, i) => (
+            {/* <CheckboxList/> */}
+            {data?.filter((x) => x.status === false)[0] ? (
+              filterData && filterData.length > 0 ?
+              filterData.map((todo, i) => (
                   <CheckboxList
                     key={i}
+                    // type="all"
                     todo={todo}
-                    id={todo.id}
-                    getingdata={GetingUserTododata}
+                    id={todo._id}
+                    getingdata={getingUserdata}
                   />
-                ))
+                )): (
+                  "No match found"
+                )
             ) : (
-              <center>
-                <h3>No active task</h3>
-              </center>
+              "No active task"
             )}
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
-            {data.filter((x) => x.status === "Completed")[0] ? (
-              data
-                .filter((x) =>
-                  x.status === "Completed"
-                    ? x.todo.includes(search) ||
-                      x.category.includes(search) ||
-                      x.date.includes(search)
-                    : null
-                )
-                .map((todo, i) => (
+            {data?.filter((x) => x.status === true)[0] ? (
+              filterData && filterData.length > 0 ? 
+                filterData.map((todo, i) => (
                   <CheckboxList
                     key={i}
+                    // type="all"
                     todo={todo}
-                    id={todo.id}
-                    getingdata={GetingUserTododata}
+                    id={todo._id}
+                    getingdata={getingUserdata}
                   />
-                ))
+                )): (
+                  "No match found"
+                )
             ) : (
-              <center>
-                <h3>You did'nt completed any task</h3>
-              </center>
+              "You did'nt completed any task"
             )}
           </TabPanel>
         </SwipeableViews>

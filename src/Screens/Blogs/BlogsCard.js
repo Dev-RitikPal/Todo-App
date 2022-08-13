@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -10,19 +9,20 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { lightBlue, red } from "@mui/material/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShareIcon from "@mui/icons-material/Share";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import moment from "moment";
-import { auth, GetBlogsData, HandleAddingFavrioteBlog, HandleDeletingBlog } from "../../Firebase";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import "./Blog.css";
+import { auth, GetBlogsData, HandleDeletingBlog } from "../../Firebase";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getBlogs } from "../../Redux/Action/Actions";
 import { toast } from "react-toastify";
 import { handleErrors } from "../../Utils";
-
-import "./Blog.css";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,18 +36,15 @@ const ExpandMore = styled((props) => {
 }));
 
 export const BlogCard = (props) => {
-  // console.log(props.item);
+  console.log(props.item);
   const [expanded, setExpanded] = React.useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const Favblog = useSelector((state) => state?.userData?.data?.favrouteblogs);
-  const [showcolor, setshowcolor] = React.useState(Favblog?.includes(props?.item?.blogid));
-  const [favrouteblogs, setfavrouteblogs] = React.useState(Favblog);
-
+  const history = useNavigate();
   const colors = [
     "red",
     "blue",
     "black",
+    "lightBlue",
     "green",
     "purple",
     "violet",
@@ -62,7 +59,6 @@ export const BlogCard = (props) => {
   };
   React.useEffect(() => {
     BlogDetails();
-    setshowcolor(Favblog?.includes(props?.item?.blogid))
   }, []);
 
   const BlogDetails = async () => {
@@ -80,7 +76,6 @@ export const BlogCard = (props) => {
     try {
       await HandleDeletingBlog(blogid);
       BlogDetails();
-      setshowcolor(true)
       toast.success("Bog deleted");
       // setloader(false);
     } catch (error) {
@@ -89,29 +84,9 @@ export const BlogCard = (props) => {
     // setloader(false);
   };
 
-  const AddTofavorite = async (blogId) => {
-    const isexits = favrouteblogs?.filter(item => item == blogId)
-    const removefav = Favblog.filter((item)=> item !== blogId)
-    console.log(removefav[0],"<=======")
-    try {
-      if (!removefav[0]) {
-        await HandleAddingFavrioteBlog([...Favblog, blogId]);
-        BlogDetails();
-        toast.success("Added to favorities");
-        setshowcolor(true)
-      } else {
-        await HandleAddingFavrioteBlog(removefav);
-        setshowcolor(false)
-        toast.info("Removed From favriote");
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
   return (
     <div className="card-div">
-      <Card style={{ width: "", marginTop: "2%", backgroundColor: 'rgb(0 30 60)', color: "white", borderRadius: "9px" }} className="blogcard dark">
+      <Card style={{ width: "100%", marginTop: "2%" }} className="blogcard">
         <CardHeader
           avatar={
             <Avatar
@@ -128,14 +103,17 @@ export const BlogCard = (props) => {
               aria-label="settings"
               onClick={() => HandleDeleteBlog(props?.item?.blogid)}
             >
-              <span style={{ color: "white" }}>{auth.currentUser.uid == props?.item?.uid ? <DeleteIcon /> : null}</span>
+              {/* <MoreVertIcon /> */}
+              {auth.currentUser.uid == props?.item?.uid ? <DeleteIcon /> : null}
             </IconButton>
           }
           title={
             props?.item?.Name.charAt(0)?.toUpperCase() +
             props?.item?.Name.slice(1)
           }
-          subheader={<span style={{ color: "white" }}>{moment(props?.item?.date).format("ll") + " " + props?.item?.time}</span>}
+          subheader={
+            moment(props?.item?.date).format("ll") + " " + props?.item?.time
+          }
         />
         <CardMedia
           component="img"
@@ -145,31 +123,29 @@ export const BlogCard = (props) => {
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary" fontSize="20px">
-            <strong style={{ color: "white" }}>Title : </strong>{" "}
-            <span dangerouslySetInnerHTML={{ __html: props?.item?.Title }} style={{ color: "white" }} />
+            <strong>Title : </strong>{" "}
+            <span dangerouslySetInnerHTML={{ __html: props?.item?.Title }} />
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" onClick={() => AddTofavorite(props?.item?.blogid)}>
-            <FavoriteIcon style={{ color: showcolor ? "red" : "white" }} />
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="share">
-            <ShareIcon style={{ color: "white" }} />
+            <ShareIcon />
           </IconButton>
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
-            >
-            <ExpandMoreIcon style={{ color: "white" }} />
+          >
+            <ExpandMoreIcon />
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <center> <Typography paragraph>About this blog</Typography></center>
-            <hr />
-            <br /><br />
+            <Typography paragraph>About this blog :</Typography>
             <Typography paragraph>
               <span
                 dangerouslySetInnerHTML={{ __html: props?.item?.Blogdetail }}
@@ -180,14 +156,6 @@ export const BlogCard = (props) => {
               serve.
             </Typography>
           </CardContent>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon style={{ color: "white" }} />
-          </ExpandMore>
         </Collapse>
       </Card>
     </div>

@@ -24,7 +24,7 @@ export const UserLogout = async () =>{
     }
 }
 
-export const AddingUserdata = async (username,email,phone,address,country,state,city,zipcode,profile,blogId) => {
+export const AddingUserdata = async (username,email,phone,address,country,state,city,zipcode,profile) => {
     return await setDoc(doc(dbref, email), {
         username: username.charAt(0)?.toUpperCase() + username.slice(1),
         email: email,
@@ -34,8 +34,7 @@ export const AddingUserdata = async (username,email,phone,address,country,state,
         state: state,
         city: city,
         zipcode: zipcode,
-        profileimage : profile,
-        Favoriteblogs : blogId || []
+        profileimage : profile
     });
 }
 
@@ -58,18 +57,6 @@ export const HandleUpdateUserData = async (username, email, phone, address, zipc
         return error.message
     }
 }
-
-export const HandleAddingFavrioteBlog = async (Favoriteblogs) => {
-    try {
-        const updatedata = doc(dbref, auth?.currentUser?.email);
-        return await updateDoc(updatedata, { 
-            favrouteblogs: Favoriteblogs,
-        })
-    } catch (error) {
-        return error.message
-    }
-}
-
 
 export const addTodos = async (addtask, category, description ) => {
     const today = new Date() 
@@ -139,10 +126,10 @@ export const GetUsertodoData = () => {
     })
 }
 
-export const Updatetaskname = async (id, taskname, taskdesc) => {
+export const Updatetaskname = async (id,name) => {
     try {
         const updatedata = doc(pathref, auth.currentUser.uid+"/data/"+id);
-        return await updateDoc(updatedata, { todo : taskname?.charAt(0)?.toUpperCase() + taskname?.slice(1), description : taskdesc?.charAt(0)?.toUpperCase() + taskdesc?.slice(1) })
+        return await updateDoc(updatedata, { todo : name.charAt(0)?.toUpperCase() + name.slice(1) })
     } catch (error) {
         return error.message
     }

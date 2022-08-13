@@ -1,17 +1,17 @@
 import React from 'react'
 
 import './App.css';
-import { Routes } from './Routes'
+import { AllRoutes } from './Routes'
 import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <>
-    <Routes />
+    <AllRoutes />
     <ToastContainer 
       autoClose={3000}
-      theme='dark'
-      position="bottom-right"/>
+      // theme='white'
+      position="top-right"/>
     </>
   );
 }

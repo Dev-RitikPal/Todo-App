@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import './login.css'
 
 import { Button, Input } from '../../Components';
 import { UserLogin } from '../../Firebase';
 import { handleErrors, handleValiDation, isEmailValid } from '../../Utils';
 import { loading } from '../../Assets';
+import {getUserDB} from '../../Redux/Action/Actions'
 
 export const Login = (props) => {
 
-    const history = useHistory();
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    
     const [loader, setloader] = useState(false)
     const [formData, setFormData] = useState({ 
         Email:  { value: "", errorMessage: "" },
@@ -24,22 +27,30 @@ export const Login = (props) => {
         e.preventDefault();
         setloader(true)
         try {
-            const response = await UserLogin(formData?.Email?.value, formData?.Password?.value);
-            if (response) {
-                history.push(`/portfolio/${"Ritik-Pal"}`)
+            const data = {
+                email: formData?.Email?.value,
+                password: formData?.Password?.value,
+              };
+              const res = await axios.post("http://localhost:3003/signin", data);
+              console.log("🚀 ~ file: Login.js ~ line 32 ~ handlelogin ~ res", res)
+            // const response = await UserLogin(formData?.Email?.value, formData?.Password?.value);
+            if (res.data.user.email) {
+                // navigate.push(`/portfolio/${"Ritik-Pal"}`)
+                 dispatch(getUserDB(res));
+                navigate('/')
                 setloader(false)
                 toast.success("welcome : "+formData?.Email?.value)
             } else {
                 toast.error("Invalid User")
             }
         } catch (error) {
+            console.log("🚀 ~ file: Login.js ~ line 46 ~ handlelogin ~ error", error)
             toast.error(handleErrors(error))
         }
         setloader(false)
     }
            
     const isEnable = () => {
-
         return (!formData?.Email?.value || !formData?.Password?.value?.length >= 6)
     }
 

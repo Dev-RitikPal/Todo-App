@@ -19,9 +19,9 @@ import {BACKEND_URL} from '../../Services'
 import {ModalOpen} from "../../Components/Modal"
 import { TodoForm } from "./TodoForm";
 
-export const instance = axios.create({
-  baseURL:BACKEND_URL
-})
+// export const instance = axios.create({
+//   baseURL:BACKEND_URL
+// })
 
 export const TodoTasks = (props) => {
   const {show, todo} = props
@@ -38,7 +38,7 @@ export const TodoTasks = (props) => {
   const getingUserdata = async () => {
     try {
       // const res = await GetUsertodoData();
-      const res = await instance.get("/getTodos");
+      const res = await axios.get("http://localhost:3003/getTodos");
       if (res) {
         dispatch(GetTodo(res.data));
       } else {

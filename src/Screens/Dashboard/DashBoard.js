@@ -1,5 +1,5 @@
 import React from 'react'
-// import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import './Dashboard.css'
@@ -9,6 +9,8 @@ import { Navbaar } from '../../Containers'
 export const Dashboard = () => {
 
     // const activetasks = useSelector((state) => state?.todos);
+// const alldata = useSelector((state)=>state)
+    // console.log("🚀 ~ file: DashBoard.js ~ line 13 ~ Dashboard ~ alldata", alldata)
     
     return (
         <>

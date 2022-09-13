@@ -1,11 +1,9 @@
 import { React, useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
-import { onAuthStateChanged } from "@firebase/auth";
 import { useSelector } from "react-redux";
-// import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-import { auth } from "../Firebase";
 import {
   Dashboard,
   Login,
@@ -18,54 +16,53 @@ import {
   Profile,
   TypingTest,
 } from "../Screens";
-import { PrivateRoute } from "./PrivateRoute";
-import { PublicRoute } from "./PublicRoutes";
-import { loading } from "../Assets";
 
 export const AllRoutes = (props) => {
-  const publicroutes = [
-    { path: "/", component: Portfolio },
-    { path: "/signup", component: Signup },
-    { path: "/login", component: Login },
-  ];
-
-  const userData = useSelector((state) => state?.getMongodata);
-
-  const [user, setUser] = useState(userData);
-  console.log("🚀 ~ file: Route.js ~ line 35 ~ AllRoutes ~ user", user)
-  const [loader, setloader] = useState(false);
-
+  const userID = localStorage.getItem("authTokan");
+  // const userID = useSelector((state)=>state?.getMongodata?.user?._id)
   const privateroutes = [
     { path: "/", component: <Dashboard /> },
     {
       path: "/Portfolio/:Ritik-PAl",
       component: <Portfolio />,
     },
-    { path: "/test-typing", component: <TypingTest /> },
-    { path: "/todo-app", component: <TodoTasks /> },
-    { path: "/blogs", component: <Blog /> },
-    { path: "/createblog", component: <CreateBlog /> },
-    { path: "/blogs/:Blogdetail", component: <Showblogs /> },
-    { path: "/Profile", component: <Profile /> },
-    { path: "/", component: <Portfolio/> },
-    { path: "/signup", component: <Signup/> },
-    { path: "/login", component: <Login/> },
+    {
+      path: "/test-typing",
+      component: !userID ? <Navigate replace to="/" /> : <TypingTest />,
+    },
+    {
+      path: "/todo-app",
+      component: !userID ? <Navigate replace to="/" /> : <TodoTasks />,
+    },
+    {
+      path: "/blogs",
+      component: !userID ? <Navigate replace to="/" /> : <Blog />,
+    },
+    {
+      path: "/createblog",
+      component: !userID ? <Navigate replace to="/" /> : <CreateBlog />,
+    },
+    {
+      path: "/blogs/:Blogdetail",
+      component: !userID ? <Navigate replace to="/" /> : <Showblogs />,
+    },
+    {
+      path: "/Profile",
+      component: !userID ? <Navigate replace to="/" /> : <Profile />,
+    },
+    {
+      path: "/Portfolio",
+      component: !userID ? <Navigate replace to="/" /> : <Portfolio />,
+    },
+    {
+      path: "/signup",
+      component: userID ? <Navigate replace to="/" /> : <Signup />,
+    },
+    {
+      path: "/login",
+      component: userID ? <Navigate replace to="/" /> : <Login />,
+    },
   ];
-
-  useEffect(() => {
-    handleauth();
-  }, []);
-
-  const handleauth = () => {
-    if (userData?.data?.user) {
-      setUser(true);
-      setloader(false);
-    }
-    // onAuthStateChanged(auth, user => {
-    //   if (user) setUser(user);
-    //     setloader(false)
-    // })
-  };
 
   return (
     <Router>
@@ -83,17 +80,7 @@ export const AllRoutes = (props) => {
             element={value.component}
           />
         ))}
-         {/* {publicroutes.map((value, index) => (
-          <PublicRoute
-            exact
-            path={value.path}
-            key={index}
-            user={user}
-            element={value.component}
-          />
-        ))} */}
       </Routes>
     </Router>
   );
 };
-// PublicRoute

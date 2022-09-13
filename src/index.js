@@ -1,19 +1,19 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from "react";
+import ReactDOM from "react-dom";
 
-import './index.css'
-import './App.css'
+import "./index.css";
+import "./App.css";
 
-import App from './App'
+import App from "./App";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import RootRed from './Redux/index.js'
-
-const store = createStore(RootRed);
+import RootRed from "./Redux/index.js";
+import {store} from './app/store'
+// const store = createStore(RootRed);
 
 ReactDOM.render(
   <Provider store={store}>
-  <App />
+    <App />
   </Provider>,
-  document.getElementById('root')
-)
+  document.getElementById("root")
+);

@@ -121,7 +121,7 @@ export const AllTaskList = ({ search, getingUserdata }) => {
             {/* <CheckboxList/> */}
             {data?.filter((x) => x.status === false)[0] ? (
               filterData && filterData.length > 0 ?
-              filterData.map((todo, i) => (
+              filterData.map((todo, i) => (!todo.status &&
                   <CheckboxList
                     key={i}
                     // type="all"
@@ -139,7 +139,7 @@ export const AllTaskList = ({ search, getingUserdata }) => {
           <TabPanel value={value} index={2} dir={theme.direction}>
             {data?.filter((x) => x.status === true)[0] ? (
               filterData && filterData.length > 0 ? 
-                filterData.map((todo, i) => (
+                filterData.map((todo, i) => (todo.status &&
                   <CheckboxList
                     key={i}
                     // type="all"

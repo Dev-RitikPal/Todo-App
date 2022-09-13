@@ -23,12 +23,12 @@ import { TodoForm } from "./TodoForm";
 //   baseURL:BACKEND_URL
 // })
 
+
 export const TodoTasks = (props) => {
   const {show, todo} = props
   const dispatch = useDispatch();
   const closeRef = useRef();
-  const data = useSelector((state) => state?.todos);
-  const history = useNavigate();
+
   const [addtask, setAddtask] = useState("");
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
@@ -37,11 +37,16 @@ export const TodoTasks = (props) => {
 
   const getingUserdata = async () => {
     try {
-      // const res = await GetUsertodoData();
-      const res = await axios.get("http://localhost:3003/getTodos");
+      const userID = localStorage.getItem("authTokan")
+      const data = {
+        headers:{
+            authId:userID
+        }
+    }
+      const res = await axios.get(`http://localhost:3003/getTodos`,data);
       if (res) {
         dispatch(GetTodo(res.data));
-      } else {
+      } else {  
         toast.error("User doesn't exists");
       }
     } catch (error) {
@@ -60,7 +65,9 @@ export const TodoTasks = (props) => {
     setLoader(true);
     if (addtask) {
       try {
+        const userId = localStorage.getItem("loginId")
         const data = {
+          id:userId,
           taskName:addtask,
           description:description,
           category:category,
@@ -102,7 +109,7 @@ export const TodoTasks = (props) => {
       <div className="h-100 ">
         <div className="main-div h-100%">
           <br />
-          <h1 style={{marginLeft:"5%"}}>ToDo-App</h1>
+          <h1 style={{marginLeft:"5%"}} >ToDo-App</h1>
           <br />
           <div className="App">
             <br />

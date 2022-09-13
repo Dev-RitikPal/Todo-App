@@ -6,7 +6,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -69,7 +69,7 @@ BootstrapDialogTitle.propTypes = {
 
 export const CheckboxList = ({ todo, id, getingdata }) => {
   const closeRef = useRef();
-
+  const dispatch = useDispatch()
   const [updatedname, setUpdatedname] = React.useState();
   const [updateddesc, setUpdateddesc] = React.useState();
   const [openTask, setOpenTask] = React.useState(false);
@@ -119,12 +119,52 @@ export const CheckboxList = ({ todo, id, getingdata }) => {
   };
 
   const handleDeleteClick = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3003/deleteTodo/${id}`);
-      getingdata();
-    } catch (error) {
-      toast.error(error.message);
-    }
+      const res = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js"
+      );
+  
+      const dummyData = {
+        // id: "order_JpxTfQfTVi33pe",
+        id: "",
+        currency: "INR",
+        amount: 49900,
+      };
+      if (!res) {
+        alert("Razorpay SDK failed to load. Are you online?");
+        return;
+      }
+  
+      dispatch(RazorpayAPI(1));
+  
+      const options = {
+        // key: __DEV__ ? "rzp_test_gu5uk7JE2B15Ah" : "PRODUCTION_KEY",
+        key: "rzp_test_gu5uk7JE2B15Ah",
+        currency: dummyData.currency,
+        amount: dummyData.amount.toString(),
+        order_id: dummyData.id,
+        name: "Donation",
+        description: "Thank you for nothing. Please give us some money",
+        // image: "http://localhost:1337/user.png",
+        handler: function (response) {
+          alert(response.razorpay_payment_id);
+          alert(response.razorpay_order_id);
+          alert(response.razorpay_signature);
+        },
+        prefill: {
+          name: "Donation Test",
+          email: "donation@test.com",
+          phone_number: "9899999999",
+        },
+      };
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
+    // try {
+    //   await axios.delete(`http://localhost:3003/deleteTodo/${id}`);
+    //   getingdata();
+    // } catch (error) {
+    //   toast.error(error.message);
+    // }
   };
 
   return (

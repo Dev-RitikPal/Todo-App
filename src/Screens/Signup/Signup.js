@@ -19,16 +19,18 @@ import {
   UserSignup,
   userSignup,
 } from "../../Firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { blog } from "../../Assets";
 import { storage, ref } from "../../Firebase";
 import { getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { loading } from "../../Assets";
+import { GetUserData } from "../../Redux/Action/Actions";
 
 export const Signup = (props) => {
   const history = useNavigate();
   const dispatch = useDispatch();
-
+// const userData = useSelector((state)=>state)
+// console.log("🚀 ~ file: Signup.js ~ line 33 ~ Signup ~ useData", userData)
   const [loader, setloader] = useState(false);
   const [uploadprogress, setUploadprogress] = useState(0);
   const [imageAsUrl, setimageAsUrl] = useState(null);
@@ -57,6 +59,7 @@ export const Signup = (props) => {
         email: formData?.Email?.value,
         password: formData?.Password?.value,
         firstName: formData?.Name?.value,
+        todos:[]
         // Phone: formData?.Phone?.value,
         // address: formData?.Address?.value,
         // country: CountryList[formData.Country.value - 1]?.name,
@@ -64,17 +67,12 @@ export const Signup = (props) => {
         // city: CityList[formData.City.value - 1]?.name,
         // zipCode: formData?.Zipcode?.value,
       };
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: data,
-      };
       const res = await axios.post("http://localhost:3003/signup", data);
+      // console.log("🚀 ~ file: Signup.js ~ line 68 ~ handlesignup ~ res", res)
       if (res.data.email) {
-        console.log(
-          "🚀 ~ file: Signup.js ~ line 55 ~ handlesignup ~ res",
-          res.data
-        );
+        localStorage.setItem('loginId',res.data?.id)
+        dispatch(GetUserData(res.data))
+        history('/')
       } else {
         console.log(res.data.msg);
       }

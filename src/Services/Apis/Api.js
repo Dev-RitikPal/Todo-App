@@ -7,4 +7,4 @@ export const getENVString = (url) => {
   }
 };
 
-export const BACKEND_URL = getENVString("BACKEND_URL");
+export const BACKEND_URL = getENVString("http://localhost:3003");
